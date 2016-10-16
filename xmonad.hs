@@ -15,6 +15,7 @@ import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Util.Scratchpad
 
 --TODO: understand Scratchpad, and then search engines prompt
 
@@ -51,9 +52,21 @@ myListCommands = [
 	
 	]
 
+-- use <+> ...
+myManageHook =  manageHook defaultConfig <+>  manageScratchPad
+
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook(W.RationalRect l t w h)
+	where 
+		h = 0.1
+		w = 1
+		t = 1-h
+		l = 1-w
+
 main = xmonad $ defaultConfig
 	{ modMask = super
 	, logHook = historyHook
+	, manageHook =  myManageHook
 	, workspaces = myWorkspaces
 	, layoutHook = layout
 	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> randomWallpaper
@@ -62,6 +75,7 @@ main = xmonad $ defaultConfig
 	[((0 , xK_Print), randomWallpaper)
 	,((super , xK_e), commands >>= runCommand)
 	,((0 , xK_F13), rpOther)
+	,((0 , xK_F12),scratchpadSpawnActionTerminal "urxvt")
 	,((controlMask .|. alt, xK_k), halt)
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
@@ -89,7 +103,8 @@ browser, launcher,console, speedConsole, batStatus, randomWallpaper, halt, execu
 browser = spawn "firefox"
 launcher = spawn "dmenu_run"
 console = spawn "lxterminal"
-speedConsole = spawn "Eterm"
+--speedConsole = spawn "Eterm"
+speedConsole = scratchpadSpawnActionTerminal "urxvt"
 batStatus = spawn "/home/guru/bin/batStatus.sh" -- battery status
 randomWallpaper = spawn "feh --randomize --recursive --bg-scale ~/wp"
 halt = spawn "sudo shutdown now"
@@ -115,7 +130,7 @@ ratpoisonBindings =
 	,((0, xK_f), browser)
 
 	-- execute ...
-	,((shiftMask, xK_1), executePrompt)
+	,((shiftMask, xK_1), scratchpadSpawnActionTerminal "urxvt")
 
 
 	-- move window "stack"
