@@ -16,6 +16,8 @@ import XMonad.ManageHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 
+--TODO: understand Scratchpad, and then search engines prompt
+
 super :: KeyMask
 super = mod4Mask
 
