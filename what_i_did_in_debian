@@ -1,0 +1,309 @@
+03/04/2014
+Debian installed ( unallocated space is recognized : maximum contiguous free space)
+
+Printer test-page
+
+netselect
+netselect-apt
+(it selects the best source for apt-get from nearly 480, it chooses 10, it writes sources.list,
+we can backup the old, and use this source)
+
+sudo apt-get install r-base
+
+ratpoison
+ratpoison.desktop from the example LXDE.desktop
+guru to sudoers list
+
+r-base
+
+04/04/2014
+real firefox 
+downloaded from firefox site .tar.bzip2
+run firefox...
+we can backup /usr/bin/firefox and make a link to the file firefox/firefox in home directory
+
+sudo apt-get install vim
+sudo apt-get install emacs
+sudo apt-get install vim-gtk
+sudo apt-get install numlockx
+sudo apt-get install ttf-tamil-fonts
+sudo apt-get install xpdf
+
+sudo apt-get upgrade
+sudo apt-get install eterm
+
+made pics directory and put some wallpapers I had
+sh -> dash ; so changed it sh -> bash to make .ratpoisonrc function
+
+.ratpoisonrc .bashrc  .xbindkeysrc 
+guru_bin directory
+sudo apt-get install unclutter
+
+uninstalled r-core...
+sudo apt-get install gfortran libreadline6-dev libx11-dev libxt-dev
+(for R)
+then compiled R from source
+sudo apt-get install links
+sudo apt-get install aria2
+
+sudo apt-get install flashplugin-nonfree
+it didn't function
+libflashplayer.so downloaded with the player and it only copied to .mozilla/plugins (only plugins directory created)
+restart firefox
+
+
+06/04/2014
+as I tried to remove mawk whole thing SPOILED... I had to reformat, reinstall...
+so did all of the above... today
+
+.xsessionrc
+
+alias l, la, ls ... the same from knoppix
+
+07/04/2014
+firmware-linux-nonfree.deb    dkpg -i
+
+to avoid javaldx failed error :
+"sudo chown -R --reference="$HOME" ~/.config"    to get .config the same group and owner as the home directory
+
+chown /home ... so that I can edit it...
+
+news katturai ... to /home
+copied .fonts from the knoppix to ~/.fonts
+
+sudo apt-get dos2unix to get unix2dos
+#didn't function so dpkg -i .... after downloading
+
+libreoffice "Ask when not saving to odt" option unchecked once... so that files can be created without problem...
+
+indian.elc -> indian.elc.bkp
+indian.el  leim quail    ...byte-compiled it.
+elisp_code directory
+
+mkdir -p ~/.mutt/cache/headers
+mkdir ~/.mutt/cache/bodies
+touch ~/.mutt/certificates
+using GURU_SENDS_TO_GURU.sh  verified if it functions
+
+sudo apt-get install ttf-indic-fonts
+sudo apt-get install xvkbd
+
+(I was unable to run my tamil elisp code... because function 'some' not available... but by installing slime I got it)
+
+sudo apt-get install sbcl
+sudo apt-get install slime
+
+sudo apt-get install aspell-ta
+(first .aspell.ta.pws only ... kalki, viviliyam etc I will recompile later as its format is not recognized)
+
+sudo apt-get install vlc
+sudo apt-get install wordnet xchm qrencode nload feh
+
+firefox adblockplus, flash download
+
+08/04/2015
+deb http://ftp.de.debian.org/debian wheezy main non-free 
+added to /etc/apt/sources.list
+
+sudo apt-get update
+sudo apt-get install unrar
+
+dkpg -r linux-firmware-nonfree
+sudo apt-get install firmware-linux-nonfree
+sudo apt-get install firmware-realtek    ( rtl....81.fw missing error...)
+
+TO MAKE EMACS show tamil fonts in shell mode correctly
+sudo apt-get install libfreetype6-dev
+sudo apt-get install libfontconfig1-dev
+sudo apt-get install libxft-dev
+(after the three steps terminal shows sntmzh fonts correctly as in Knoppix;)
+
+sudo apt-get install fontmatrix
+
+sudo apt-get install parallel
+sudo apt-get install imagemagick
+(as I was typing news for Malaimurasu Reporter Jeeva)
+
+09/04/2015
+R : tm (to run example(wordcloud))
+sudo apt-get install xbindkeys
+sudo apt-get install bluez-compat
+sudo apt-get install obexftp
+sudo apt-get install rfkill
+
+vmtouch
+
+10/04/2015
+emacs (set-language-environment utf-8);  now it doesn't ask if I want to use utf-8,  and as an additional boon I get tamil in the emacs shell as in Knoppix so I can uses info_pradasham, grep ... etc ; also I can code in javascript, R ... in tamil...
+
+thiruvalluvar tamil font
+some more unicode fonts form Azhagi ... but not all was seen from libreoffice... Ila.Sundharam not recognized (but it's apparently for Windows as they want us to start Azhagi software...)
+
+GIST-TMOTChanakya seemed a best font for tamil to me... so I put it for emacs katturai mode and emacs news mode
+(and set the modeline to Deja vu 10)
+
+sudo apt-get install gnome-font-viewer
+
+R package cluster
+rel.tar.gz installed (relevant)
+
+11/04/2015
+AHCI mode in BIOS
+
+Firefox : AHCI mode in BIOS
+
+14/04/2015
+
+sudo apt-get install dmenu
+
+15/04/2015
+sudo apt-get install libpng-dev
+sudo apt-get install libjpeg-dev
+
+stereograph from sourceforge   source compiled.
+
+sudo apt-get install libnetpbm10-dev
+(to get pamstereogram ; but was unsucessful)
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get docx2txt
+
+16/04/2015
+
+povray installed from source
+sudo apt-get update
+sudo apt-get upgrade
+
+21/04/2015
+sudo apt-get install chromium-bsu
+
+
+override cache management in firefox...
+
+sudo apt-get install okular
+(for printing aadhar for daddy, but instead printed with zathura)
+
+22/04/2015
+sudo apt-get install ess 
+(emacs speaks statistics)
+
+23/04/2015
+sudo apt-get install git
+(for emscripten)
+
+sudo apt-get install cmake
+sudo apt-get install nodejs
+sudo apt-get install nodejs-legacy
+
+as root: 
+curl https://www.npmjs.com/install.sh | sh
+to install npm
+
+sudo npm install -g jslint
+sudo npm install -g jshint (a fork of jslint...)
+edited .jshintrc ...
+
+04/05/2015
+sudo apt-get install rtorrent
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install clips
+
+06/05/2015
+sudo apt-get install pdftk
+
+11/05/2015
+sudo apt-get install fbreader
+
+trans shell (google translate commandline)
+
+18/05/2015
+sudo apt-get install wings3d
+
+19/05/2015
+sudo apt-get update
+
+22/05/2015
+sudo apt-get install ghc
+
+13/06/2015
+sudo apt-get install calibre
+
+16/06/2015
+sudo apt-get install texlive
+
+17/06/2015
+sudo apt-get install jodconverter
+
+20/06/2015
+my IP address is 61.3.255.225
+sudo apt-get install nmap
+
+23/06/2015
+sudo apt-get update
+sudo apt-get upgrade
+
+29/06/2015
+sudo apt-get install gnumeric (to get ssconvert)
+
+03/07/2015
+sudo apt-get instal catdoc
+
+08/07/2015
+(scheme2js, bigloo)
+(libtoolize needed 
+so 
+sudo apt-get install build-essential libtool
+)
+sudo apt-get install automake
+
+10/07/2015
+sudo apt-get install k3b
+
+
+20/07/2015
+sudo apt-get install libghc-random-dev
+
+21/07/2015
+sudo apt-get install cabal-debian
+sudo apt-get install cabal-install
+sudo apt-get install haskell-platform
+
+cabal install cpphs
+cabal install fay fay-base
+added ~/.cabal/bin to PATH to make cpphs available to the fay installation.
+
+sudo npm -g install closurecompiler
+
+22/07/2015
+cabal install hlint
+
+pathogen for vim
+syntastic for vim
+
+24/07/2015
+
+sudo apt-get install tesseract-ocr
+
+25/07/2015
+
+sudo apt-get install gthumb
+
+27/07/2015
+
+R
+install.packages("png")
+install.packages("pixmap")
+
+28/07/2015
+
+cabal install hyphenation
+
+sudo apt-get install scite
+
+haskell-mode for vim
+sudo apt-get install ghc-doc
+sudo apt-get install ghc-mod
+
+haskell-vim  (git cloned) it has smarter indentation
