@@ -21,16 +21,28 @@ import XMonad.Util.Scratchpad
 import XMonad.Actions.WindowBringer
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.Named
+import XMonad.Prompt
+import XMonad.Prompt.Input
+import XMonad.Prompt.AppendFile
 
 --TODO: understand Scratchpad, and then search engines prompt
 
-super :: KeyMask
+super, alt, hyper :: KeyMask
 super = mod4Mask
-
-alt :: KeyMask
 alt = mod1Mask
+hyper = mod3Mask
+
+dateCommand = "date +'%a %d/%m/%Y   %T' "
+
+
 
 ratpoisonEscape = (0, xK_less)
+
+addReminder = do
+	spawn(dateCommand++">>"++remindersFile)
+	appendFilePrompt defaultXPConfig remindersFile
+	where 
+		remindersFile = "/home/guru/.notes"
 
 
 
@@ -85,6 +97,8 @@ main = xmonad $ defaultConfig
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_F12),scratchpadSpawnActionTerminal "urxvt")
 	,((0 , xK_Menu),scratchpadSpawnActionTerminal "urxvt")
+	,((hyper , xK_r), addReminder)
+	--,((0 , xK_a), inputPrompt defaultXPConfig "Fire" ?+ spawn)
 	,((controlMask .|. alt, xK_k), halt)
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
@@ -104,7 +118,7 @@ rpNext = windows W.focusUp
 rpPrevious = windows W.focusDown
 
 rpOnly =  sendMessage $ JumpToLayout "Full"
-rpSplit =  sendMessage $ JumpToLayout "2Row"
+rpSplit =  sendMessage $ JumpToLayout "2Row" --ratpoison continues to split... but we don't
 rpHSplit =  sendMessage $ JumpToLayout "2Col"
 --rpOnly = setLayout $ XMonad.layoutHook conf
 
