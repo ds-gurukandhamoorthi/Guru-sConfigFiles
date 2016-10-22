@@ -95,10 +95,11 @@ main = xmonad $ defaultConfig
 	[((0 , xK_Print), randomWallpaper)
 	,((super , xK_e), commands >>= runCommand)
 	,((0 , xK_F13), rpOther)
-	,((0 , xK_F12),scratchpadSpawnActionTerminal "urxvt")
-	,((0 , xK_Menu),scratchpadSpawnActionTerminal "urxvt")
+	,((0 , xK_Menu), phantomConsole)
+	,((0 , 0), phantomConsole)
+	,((0 , xK_F12), phantomConsole)
 	,((hyper , xK_r), addReminder)
-	--,((0 , xK_a), inputPrompt defaultXPConfig "Fire" ?+ spawn)
+	--,((0 , xK_F10), inputPromptWithCompl defaultXPConfig "Fire" (mkComplFunFromList' ["1.Tall","2.Wide"]) ?+ \l -> sendMessage $ JumpToLayout $ drop 2 l)
 	,((controlMask .|. alt, xK_k), halt)
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
@@ -142,6 +143,7 @@ oneAboveAnother = spawn "/home/guru/bin/oneAboveAnother.sh" -- battery status
 welcomeMessage = spawn "echo 'Guru never fails' | dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
 showDateTime = spawn "date +'%a %d/%m/%Y   %T' | dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
 
+phantomConsole = scratchpadSpawnActionTerminal "urxvt"
 
 
 
@@ -165,7 +167,7 @@ ratpoisonBindings =
 
 
 	-- execute ...
-	,((shiftMask, xK_1), scratchpadSpawnActionTerminal "urxvt")
+	,((shiftMask, xK_1), phantomConsole)
 
 
 	-- move window "stack"
