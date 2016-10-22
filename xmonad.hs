@@ -16,6 +16,7 @@ import XMonad.ManageHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Scratchpad
+import XMonad.Actions.WindowBringer
 
 --TODO: understand Scratchpad, and then search engines prompt
 
@@ -76,6 +77,7 @@ main = xmonad $ defaultConfig
 	,((super , xK_e), commands >>= runCommand)
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_F12),scratchpadSpawnActionTerminal "urxvt")
+	,((0 , 255),scratchpadSpawnActionTerminal "urxvt") -- just to accomodate the laptop... (avoids typing fn + f12) FIXME
 	,((controlMask .|. alt, xK_k), halt)
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
@@ -128,6 +130,8 @@ ratpoisonBindings =
 	,((0, xK_k),  kill)
 	,((0, xK_period), launcher)
 	,((0, xK_f), browser)
+	,((0, xK_w), gotoMenuArgs ["-l", "25"])
+
 
 	-- execute ...
 	,((shiftMask, xK_1), scratchpadSpawnActionTerminal "urxvt")
@@ -145,6 +149,8 @@ ratpoisonBindings =
 
 	-- resizing
 	, ((controlMask, xK_r), submap . M.fromList $ resizingBindings)
+
+	,((super, xK_F12),  batStatus)
 
 	-- show useful information
 	,((super, xK_F1),  batStatus)
