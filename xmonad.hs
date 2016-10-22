@@ -17,6 +17,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Scratchpad
 import XMonad.Actions.WindowBringer
+import XMonad.Layout.WindowNavigation
 
 --TODO: understand Scratchpad, and then search engines prompt
 
@@ -31,7 +32,8 @@ ratpoisonEscape = (0, xK_less)
 
 
 --layout = noBorders Full ||| tiled ||| Mirror tiled
-layout = smartBorders $  Mirror tiled ||| Full ||| tiled
+--layout = smartBorders $  configurableNavigation (navigateColor "#0000FF") $ Mirror tiled ||| Full ||| tiled
+layout = smartBorders $  windowNavigation $ Mirror tiled ||| Full ||| tiled
 	where
 		tiled = Tall nMaster delta ratio
 		nMaster = 2
@@ -131,6 +133,14 @@ ratpoisonBindings =
 	,((0, xK_period), launcher)
 	,((0, xK_f), browser)
 	,((0, xK_w), gotoMenuArgs ["-l", "25"])
+	,((0 , xK_Right), sendMessage $ Go R)
+	,((0 , xK_Left), sendMessage $ Go L)
+	,((0 , xK_Up), sendMessage $ Go U)
+	,((0 , xK_Down), sendMessage $ Go D)
+	,((controlMask , xK_Right), sendMessage $ Swap R)
+	,((controlMask , xK_Left), sendMessage $ Swap L)
+	,((controlMask , xK_Up), sendMessage $ Swap U)
+	,((controlMask , xK_Down), sendMessage $ Swap D)
 
 
 	-- execute ...
