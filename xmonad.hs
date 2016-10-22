@@ -77,7 +77,7 @@ main = xmonad $ defaultConfig
 	,((super , xK_e), commands >>= runCommand)
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_F12),scratchpadSpawnActionTerminal "urxvt")
-	,((0 , 255),scratchpadSpawnActionTerminal "urxvt") -- just to accomodate the laptop... (avoids typing fn + f12) FIXME
+	,((0 , xK_Menu),scratchpadSpawnActionTerminal "urxvt")
 	,((controlMask .|. alt, xK_k), halt)
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
