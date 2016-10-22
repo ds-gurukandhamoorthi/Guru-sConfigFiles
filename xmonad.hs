@@ -1,4 +1,5 @@
-import XMonad
+import XMonad hiding ( (|||) )
+import XMonad.Layout.LayoutCombinators
 import XMonad.Util.EZConfig
 import XMonad.Util.CustomKeys
 import XMonad.Util.XSelection
@@ -98,7 +99,7 @@ rpOther = nextMatch History (return True)
 rpNext = windows W.focusUp
 rpPrevious = windows W.focusDown
 
-rpOnly = windows W.focusDown
+rpOnly =  sendMessage $ JumpToLayout "Full"
 --rpOnly = setLayout $ XMonad.layoutHook conf
 
 
