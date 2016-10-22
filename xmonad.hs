@@ -13,12 +13,14 @@ import XMonad.Actions.Commands
 --import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.NoBorders
+import XMonad.Layout.TwoPane
 import XMonad.ManageHook
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Scratchpad
 import XMonad.Actions.WindowBringer
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.Named
 
 --TODO: understand Scratchpad, and then search engines prompt
 
@@ -34,9 +36,11 @@ ratpoisonEscape = (0, xK_less)
 
 --layout = noBorders Full ||| tiled ||| Mirror tiled
 --layout = smartBorders $  configurableNavigation (navigateColor "#0000FF") $ Mirror tiled ||| Full ||| tiled
-layout = smartBorders $  windowNavigation $ Mirror tiled ||| Full ||| tiled
+layout = smartBorders $  windowNavigation $ Mirror tiled ||| Full ||| tiled ||| twoCol ||| twoRow
 	where
 		tiled = Tall nMaster delta ratio
+		twoCol = named "2Col" $ TwoPane delta (1/2)
+		twoRow = named "2Row" $ Mirror $ TwoPane delta (1/2)
 		nMaster = 2
 		ratio = 936/1600
 		delta = 1/300
@@ -100,6 +104,8 @@ rpNext = windows W.focusUp
 rpPrevious = windows W.focusDown
 
 rpOnly =  sendMessage $ JumpToLayout "Full"
+rpSplit =  sendMessage $ JumpToLayout "2Row"
+rpHSplit =  sendMessage $ JumpToLayout "2Col"
 --rpOnly = setLayout $ XMonad.layoutHook conf
 
 
@@ -152,7 +158,9 @@ ratpoisonBindings =
 	, (ratpoisonEscape, rpOther)
 	,((0, xK_n), rpNext)
 	,((0, xK_p), rpPrevious)
-	,((0, xK_q), rpOnly)
+	,((shiftMask, xK_q), rpOnly)
+	,((0, xK_s), rpSplit)
+	,((shiftMask, xK_s), rpHSplit)
 	,((0, xK_space), rpNext)
 	,((shiftMask, xK_space), rpPrevious)
 	,((0, xK_a), showDateTime)
