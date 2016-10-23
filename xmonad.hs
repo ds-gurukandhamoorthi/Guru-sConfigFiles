@@ -39,7 +39,7 @@ dateCommand = "date +'%a %d/%m/%Y   %T' "
 ratpoisonEscape = (0, xK_less)
 
 addReminder = do
-	spawn(dateCommand++">>"++remindersFile)
+	spawn(dateCommand ++ ">>"  ++ remindersFile)
 	appendFilePrompt defaultXPConfig remindersFile
 	where 
 		remindersFile = "/home/guru/.notes"
@@ -61,8 +61,7 @@ myWorkspaces=["1","2","3","4","5","6","7","8","9"]
 
 
 commands :: X [(String, X ())]
-commands = do
-	return $ myListCommands
+commands = return myListCommands
 
 --myListCommands :: [(String, X())]
 myListCommands = [
@@ -137,11 +136,11 @@ halt = spawn "sudo shutdown now"
 executePrompt = launcher -- to be modified to have the same functionality as in ratpoison
 internalCommandsPrompt = defaultCommands >>= runCommand
 
-
+dzen2Filter = " dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
 oneAboveAnother, welcomeMessage, showDateTime :: X()
 oneAboveAnother = spawn "/home/guru/bin/oneAboveAnother.sh" -- battery status
-welcomeMessage = spawn "echo 'Guru never fails' | dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
-showDateTime = spawn "date +'%a %d/%m/%Y   %T' | dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
+welcomeMessage = spawn $ "echo 'Guru never fails' | " ++ dzen2Filter
+showDateTime = spawn $ dateCommand ++ " | " ++ dzen2Filter
 
 phantomConsole = scratchpadSpawnActionTerminal "urxvt"
 
