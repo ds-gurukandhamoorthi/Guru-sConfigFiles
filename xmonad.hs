@@ -103,7 +103,25 @@ main = xmonad $ defaultConfig
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
 
-	]
+	] `additionalMouseBindings`
+	[
+	((super, thumbsDown), const rpPrevious)
+	,((super, thumbsUp), const rpNext)
+	,((super, scrollDown), const rpNext)
+	,((super, scrollUp), const rpPrevious)
+	,((super, left), const rpOther)
+	,((super, middle), const kill) --make it more intelligent when in firefox : close tab...
+	,((controlMask, thumbsDown), const $ spawn "xdotool key --clearmodifiers ctrl+Prior") -- TODO make it more intelligent depending on whether we are on firefox or not: when in firefox: ctrl pageup else rpPrevious ...
+	,((controlMask,thumbsUp), const $ spawn "xdotool key --clearmodifiers ctrl+Next")
+	]where
+		thumbsDown = 8 --Guru's vertical mouse
+		thumbsUp = 9 --Guru's vertical mouse
+		left = 1
+		middle = 2
+		right = 3
+		scrollUp = 4 
+		scrollDown = 5 
+	
 
 	
 	--`additionalKeysP`
