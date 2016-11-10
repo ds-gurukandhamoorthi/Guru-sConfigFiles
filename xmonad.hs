@@ -24,6 +24,7 @@ import XMonad.Layout.Named
 import XMonad.Prompt
 import XMonad.Prompt.Input
 import XMonad.Prompt.AppendFile
+import XMonad.Actions.WindowGo
 
 --TODO: understand Scratchpad, and then search engines prompt
 
@@ -68,6 +69,8 @@ myListCommands = [
 	("random-wallpaper",randomWallpaper)
 	, ("one-above-another",oneAboveAnother)
 	, ("book", spawn "zathura /home/guru/Downloads/book")
+	, ("reader", bookReader)
+	, ("android-studio", androidStudio)
 	
 	]
 
@@ -143,9 +146,11 @@ rpHSplit =  sendMessage $ JumpToLayout "2Col"
 
 --some actions
 browser, launcher,console, speedConsole, batStatus, randomWallpaper, halt, executePrompt, internalCommandsPrompt :: X()
-browser = spawn "firefox"
+browser = runOrRaise "firefox" (className =? "Firefox")
 launcher = spawn "dmenu_run"
-console = spawn "lxterminal"
+console = runOrRaise "lxterminal" (className =? "Lxterminal")
+androidStudio = runOrRaise "/opt/android-studio/bin/studio.sh" (className =? "jetbrains-studio")
+bookReader = runOrRaise "zathura" (className =? "Zathura")
 --speedConsole = spawn "Eterm"
 speedConsole = scratchpadSpawnActionTerminal "urxvt"
 batStatus = spawn "/home/guru/bin/batStatus.sh" -- battery status
