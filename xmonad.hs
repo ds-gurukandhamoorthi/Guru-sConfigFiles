@@ -150,7 +150,8 @@ browser = runOrRaise "firefox" (className =? "Firefox")
 launcher = spawn "dmenu_run"
 console = runOrRaise "lxterminal" (className =? "Lxterminal")
 androidStudio = runOrRaise "/opt/android-studio/bin/studio.sh" (className =? "jetbrains-studio")
-bookReader = runOrRaise "zathura" (className =? "Zathura")
+--bookReader = runOrRaise "zathura" (className =? "Zathura")
+bookReader = runOrRaise "zathura /home/guru/Downloads/book" (className =? "Zathura")
 --speedConsole = spawn "Eterm"
 speedConsole = scratchpadSpawnActionTerminal "urxvt"
 batStatus = spawn "/home/guru/bin/batStatus.sh" -- battery status
@@ -177,6 +178,7 @@ ratpoisonBindings =
 	,((0, xK_k),  kill)
 	,((0, xK_period), launcher)
 	,((0, xK_f), browser)
+	,((0, xK_b), bookReader)
 	,((0, xK_w), gotoMenuArgs ["-l", "25"])
 	,((0 , xK_Right), sendMessage $ Go R)
 	,((0 , xK_Left), sendMessage $ Go L)
