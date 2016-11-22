@@ -187,6 +187,7 @@ ratpoisonBindings =
 	,((0, xK_period), launcher)
 	,((0, xK_f), browser)
 	,((0, xK_b), bookReader)
+	,((0, xK_i), netBeans)
 	,((0, xK_w), gotoMenuArgs ["-l", "25"])
 	,((0 , xK_Right), sendMessage $ Go R)
 	,((0 , xK_Left), sendMessage $ Go L)
