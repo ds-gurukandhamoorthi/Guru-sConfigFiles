@@ -73,6 +73,7 @@ myListCommands = [
 	, ("book", spawn "zathura /home/guru/Downloads/book")
 	, ("reader", bookReader)
 	, ("android-studio", androidStudio)
+	, ("netbeans", netBeans)
 	, ("git-user-name", spawn "xdotool type ds-gurukandhamoorthi")
 	
 	]
@@ -154,6 +155,8 @@ browser = runOrRaise "firefox" (className =? "Firefox")
 launcher = spawn "dmenu_run"
 console = runOrRaise "lxterminal" (className =? "Lxterminal")
 androidStudio = runOrRaise "/opt/android-studio/bin/studio.sh" (className =? "jetbrains-studio")
+netBeans = runOrRaise "/home/guru/netbeans-8.2/bin/netbeans" (className =? "NetBeans IDE 8.2")
+
 --bookReader = runOrRaise "zathura" (className =? "Zathura")
 --bookReader = runOrRaise "zathura /home/guru/Downloads/book" (className =? "Zathura")
 bookReader = raiseMaybe (spawn "zathura /home/guru/Downloads/book") (className =? "Zathura")
