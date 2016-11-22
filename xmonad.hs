@@ -9,6 +9,7 @@ import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
 import XMonad.Actions.Submap
 import XMonad.Actions.Commands
+import XMonad.Actions.SpawnOn
 --import XMonad.Layout.MultiToggle
 --import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.ToggleLayouts
@@ -22,6 +23,7 @@ import XMonad.Actions.WindowBringer
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.Named
 import XMonad.Prompt
+import XMonad.Prompt.RunOrRaise
 import XMonad.Prompt.Input
 import XMonad.Prompt.AppendFile
 import XMonad.Actions.WindowGo
@@ -88,15 +90,17 @@ manageScratchPad = scratchpadManageHook(W.RationalRect l t w h)
 
 main = xmonad $ defaultConfig
 	{ modMask = super
-	, logHook = historyHook
+	, logHook = ewmhDesktopsLogHook <+> historyHook
 	, manageHook =  myManageHook
+	, handleEventHook = ewmhDesktopsEventHook
 	, workspaces = myWorkspaces
 	, layoutHook = layout
-	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> randomWallpaper
+	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> spawnOn "5" "firefox" >>randomWallpaper
 	} 
 	 `additionalKeys`
 	[((0 , xK_Print), randomWallpaper)
 	,((super , xK_e), commands >>= runCommand)
+	,((super , xK_f), runOrRaisePrompt defaultXPConfig)
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_Menu), phantomConsole)
 	,((0 , 0), phantomConsole)
@@ -107,8 +111,7 @@ main = xmonad $ defaultConfig
 
 	, (ratpoisonEscape, submap . M.fromList $ ratpoisonBindings )
 
-	] `additionalMouseBindings`
-	[
+	] `additionalMouseBindings` [
 	((super, thumbsDown), const rpPrevious)
 	,((super, thumbsUp), const rpNext)
 	,((super, scrollDown), const rpNext)
