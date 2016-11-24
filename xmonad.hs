@@ -7,6 +7,7 @@ import XMonad.Actions.GroupNavigation
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
+import XMonad.Actions.Search(lucky, google, selectSearch, promptSearch)
 import XMonad.Actions.Submap
 import XMonad.Actions.Commands
 import XMonad.Actions.CycleWS
@@ -108,6 +109,8 @@ main = xmonad $ defaultConfig
 	,((0 , xK_Menu), phantomConsole)
 	,((0 , 0), phantomConsole)
 	,((0 , xK_F12), phantomConsole)
+	,((hyper , xK_f), selectSearch lucky)
+	,((hyper , xK_g), promptSearch greenXPConfig lucky)
 	,((hyper , xK_r), addReminder)
 	--,((0 , xK_F10), inputPromptWithCompl defaultXPConfig "Fire" (mkComplFunFromList' ["1.Tall","2.Wide"]) ?+ \l -> sendMessage $ JumpToLayout $ drop 2 l)
 	,((controlMask .|. alt, xK_k), halt)
@@ -120,6 +123,7 @@ main = xmonad $ defaultConfig
 	,((super, scrollDown), const rpNext)
 	,((super, scrollUp), const rpPrevious)
 	,((super, left), const rpOther)
+	,((super, right), const $ selectSearch lucky )
 	,((super, middle), const kill) --make it more intelligent when in firefox : close tab...
 	,((controlMask, thumbsDown), const $ spawn "xdotool key --clearmodifiers ctrl+Prior") -- TODO make it more intelligent depending on whether we are on firefox or not: when in firefox: ctrl pageup else rpPrevious ...
 	,((controlMask,thumbsUp), const $ spawn "xdotool key --clearmodifiers ctrl+Next")
