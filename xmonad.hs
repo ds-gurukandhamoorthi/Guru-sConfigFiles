@@ -9,6 +9,7 @@ import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
 import XMonad.Actions.Submap
 import XMonad.Actions.Commands
+import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 --import XMonad.Layout.MultiToggle
 --import XMonad.Layout.MultiToggle.Instances
@@ -28,6 +29,7 @@ import XMonad.Prompt.Input
 import XMonad.Prompt.AppendFile
 import XMonad.Actions.WindowGo
 
+
 --TODO: understand Scratchpad, and then search engines prompt
 
 super, alt, hyper :: KeyMask
@@ -44,7 +46,7 @@ ratpoisonEscape = (0, xK_less)
 addReminder = do
 	spawn(dateCommand ++ ">>"  ++ remindersFile)
 	appendFilePrompt defaultXPConfig remindersFile
-	where 
+	where
 		remindersFile = "/home/guru/.notes"
 
 
@@ -83,7 +85,7 @@ myManageHook =  manageHook defaultConfig <+>  manageScratchPad
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook(W.RationalRect l t w h)
-	where 
+	where
 		h = 0.1
 		w = 1
 		t = 1-h
@@ -96,8 +98,8 @@ main = xmonad $ defaultConfig
 	, handleEventHook = ewmhDesktopsEventHook
 	, workspaces = myWorkspaces
 	, layoutHook = layout
-	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> spawnOn "5" "firefox" >>randomWallpaper
-	} 
+	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> browser >>randomWallpaper
+	}
 	 `additionalKeys`
 	[((0 , xK_Print), randomWallpaper)
 	,((super , xK_e), commands >>= runCommand)
@@ -127,8 +129,8 @@ main = xmonad $ defaultConfig
 		left = 1
 		middle = 2
 		right = 3
-		scrollUp = 4 
-		scrollDown = 5 
+		scrollUp = 4
+		scrollDown = 5
 	
 
 	
@@ -143,9 +145,11 @@ rpOther = nextMatch History (return True)
 rpNext = windows W.focusUp
 rpPrevious = windows W.focusDown
 
+rpOnly, rpSplit, rpHSplit, rpFocusOnVoid:: X()
 rpOnly =  sendMessage $ JumpToLayout "Full"
 rpSplit =  sendMessage $ JumpToLayout "2Row" --ratpoison continues to split... but we don't
 rpHSplit =  sendMessage $ JumpToLayout "2Col"
+rpFocusOnVoid = moveTo Next EmptyWS
 --rpOnly = setLayout $ XMonad.layoutHook conf
 
 
@@ -189,6 +193,7 @@ ratpoisonBindings =
 	,((0, xK_b), bookReader)
 	,((0, xK_i), netBeans)
 	,((0, xK_w), gotoMenuArgs ["-l", "25"])
+	,((0, xK_minus), rpFocusOnVoid)
 	,((0 , xK_Right), sendMessage $ Go R)
 	,((0 , xK_Left), sendMessage $ Go L)
 	,((0 , xK_Up), sendMessage $ Go U)
@@ -226,7 +231,7 @@ ratpoisonBindings =
 	]
 
 
-resizingBindings= 
+resizingBindings=
 	[
 	((0, xK_p), console)
 	]
