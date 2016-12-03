@@ -80,6 +80,7 @@ myListCommands = [
 	, ("reader", bookReader)
 	, ("android-studio", androidStudio)
 	, ("netbeans", netBeans)
+	, ("test-function", volumeToggle)
 	--, ("e-acute", spawn "xdotool type é")
 	--, ("n-tilde", spawn "xdotool type gurñ")
 	--, ("e-acute", UP.pasteChar noModMask 'é')
@@ -105,7 +106,7 @@ main = xmonad $ defaultConfig
 	, handleEventHook = ewmhDesktopsEventHook
 	, workspaces = myWorkspaces
 	, layoutHook = layout
-	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> spawn "setxkbmap -option compose:paus" >>browser >>randomWallpaper
+	, startupHook = welcomeMessage >> spawn "/home/guru/bin/onlyTheLargeMonitor.sh" >> ewmhDesktopsStartup >> setWMName "LG3D" >> spawn "/home/guru/bin/onDasKeyboard.sh" >>browser >>randomWallpaper
 	}
 	 `additionalKeys`
 	[((0 , xK_Print), randomWallpaper)
@@ -164,7 +165,7 @@ rpFocusOnVoid = moveTo Next EmptyWS
 
 
 --some actions
-browser, launcher,console, speedConsole, batStatus, randomWallpaper, halt, executePrompt, internalCommandsPrompt :: X()
+browser, launcher,console, speedConsole, batStatus, randomWallpaper, halt, executePrompt, internalCommandsPrompt, externalKeyboard :: X()
 browser = runOrRaise "firefox" (className =? "Firefox")
 launcher = spawn "dmenu_run"
 console = runOrRaise "lxterminal" (className =? "Lxterminal")
@@ -185,6 +186,7 @@ internalCommandsPrompt = defaultCommands >>= runCommand
 dzen2Filter = " dzen2 -p 1 -fn 'Dejavu Sans:size=20'"
 oneAboveAnother, welcomeMessage, showDateTime :: X()
 oneAboveAnother = spawn "/home/guru/bin/oneAboveAnother.sh" -- battery status
+externalKeyboard = spawn "/home/guru/bin/" -- battery status
 welcomeMessage = spawn $ "echo 'Guru never fails' | " ++ dzen2Filter
 showDateTime = spawn $ dateCommand ++ " | " ++ dzen2Filter
 
@@ -231,7 +233,7 @@ ratpoisonBindings =
 
 
 	-- resizing
-	, ((controlMask, xK_r), submap . M.fromList $ resizingBindings)
+	, ((controlMask, xK_r), resizingBindingsAsTheParenthesesThing)
 
 	,((super, xK_F12),  batStatus)
 
@@ -240,12 +242,24 @@ ratpoisonBindings =
 
 	]
 
+resizingBindingsAsTheParenthesesThing :: X()
+resizingBindingsAsTheParenthesesThing = submap . M.fromList $ resizingBindings
+
 
 resizingBindings=
 	[
-	((0, xK_p), console)
+	((0, xK_p), welcomeMessage >> resizingBindingsAsTheParenthesesThing) --recursive thing very powerful
 	]
 
+
+
+-- ** Mulitmedia ** --
+volumeUp, volumeDown :: X() -- amixer -M option is to get the same thing as alsamixser which is "more natural for the human ear"
+volumeUp = amixer "5%+" 
+volumeDown = amixer "5%-"
+volumeToggle = amixer "toggle"
+amixer  = spawn . (amixerCmd++)
+	where amixerCmd = "amixer -q -M set Master "
 
 --TO DO
 -- implement cnext cprev cother ...
