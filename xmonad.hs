@@ -3,7 +3,10 @@ import XMonad.Layout.LayoutCombinators
 import XMonad.Util.EZConfig
 import XMonad.Util.CustomKeys
 import XMonad.Util.XSelection
+import qualified XMonad.Util.Paste as UP
 import XMonad.Actions.GroupNavigation
+import Data.Monoid
+import Control.Monad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
@@ -77,6 +80,9 @@ myListCommands = [
 	, ("reader", bookReader)
 	, ("android-studio", androidStudio)
 	, ("netbeans", netBeans)
+	--, ("e-acute", spawn "xdotool type é")
+	--, ("n-tilde", spawn "xdotool type gurñ")
+	--, ("e-acute", UP.pasteChar noModMask 'é')
 	, ("git-user-name", spawn "xdotool type ds-gurukandhamoorthi")
 	
 	]
@@ -99,7 +105,7 @@ main = xmonad $ defaultConfig
 	, handleEventHook = ewmhDesktopsEventHook
 	, workspaces = myWorkspaces
 	, layoutHook = layout
-	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> browser >>randomWallpaper
+	, startupHook = welcomeMessage >> ewmhDesktopsStartup >> setWMName "LG3D" >> spawn "setxkbmap -option compose:paus" >>browser >>randomWallpaper
 	}
 	 `additionalKeys`
 	[((0 , xK_Print), randomWallpaper)
