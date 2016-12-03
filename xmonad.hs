@@ -81,8 +81,8 @@ myListCommands = [
 	, ("android-studio", androidStudio)
 	, ("netbeans", netBeans)
 	, ("test-function", volumeToggle)
-	--, ("e-acute", spawn "xdotool type é")
-	--, ("n-tilde", spawn "xdotool type gurñ")
+	, ("e-acute", spawn "xdotool getwindowfocus windowfocus --sync type é")
+	, ("n-tilde", spawn "xdotool type gurñ")
 	--, ("e-acute", UP.pasteChar noModMask 'é')
 	, ("git-user-name", spawn "xdotool type ds-gurukandhamoorthi")
 	
@@ -114,7 +114,6 @@ main = xmonad $ defaultConfig
 	,((super , xK_f), runOrRaisePrompt defaultXPConfig)
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_Menu), phantomConsole)
-	,((0 , 0), phantomConsole)
 	,((0 , xK_F12), phantomConsole)
 	,((hyper , xK_f), selectSearch lucky)
 	,((hyper , xK_g), promptSearch greenXPConfig lucky)
