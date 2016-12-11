@@ -4,7 +4,7 @@ All of Guru's configuration files
 Xmonad configuration
 
 | Key binding                                  | Action                                                              | Ratpoison Inspiration | Reminiscent of Windows        |
-| ------------                                 | -------                                                             |                       |                               |
+| ------------                                 | -------                                                             | --------------------- | ---------------------------            |
 | <kbd>PrintScr</kbd>                          | Put a random wallpaper                                              |                       |                               |
 | <kbd>Super</kbd>+<kbd>e</kbd>                | Execute a command from a preloaded list                             | colon                 | <kbd>Win</kbd>+<kbd>r</kbd>   |
 | <kbd>CapsLock</kbd>                          | Switch Focus to most recent window                                  | other                 | <kbd>Alt</kbd>+<kbd>Tab</kbd> |
