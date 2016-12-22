@@ -22,6 +22,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.TwoPane
 import XMonad.ManageHook
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Scratchpad
 import XMonad.Actions.WindowBringer
@@ -42,6 +43,12 @@ alt = mod1Mask
 hyper = mod3Mask
 
 dateCommand = "date +'%a %d/%m/%Y   %T' "
+
+testConsoleFunctiona :: X()
+testConsoleFunctiona = spawn "ls /home/guru/testfile* >> /home/guru/testfilexmonada"
+
+testConsoleFunctionb :: X()
+testConsoleFunctionb = spawn "ls /home/guru/testfile* >> /home/guru/testfilexmonadb"
 
 
 
@@ -80,7 +87,7 @@ myListCommands = [
 	, ("reader", bookReader)
 	, ("android-studio", androidStudio)
 	, ("netbeans", netBeans)
-	, ("test-function", volumeToggle)
+	, ("test-function", referenceCard `seq` showHelpRefBindingsAsTheParenthesesThing )
 	, ("e-acute", spawn "xdotool getwindowfocus windowfocus --sync type é")
 	, ("n-tilde", spawn "xdotool type gurñ")
 	--, ("e-acute", UP.pasteChar noModMask 'é')
@@ -89,7 +96,14 @@ myListCommands = [
 	]
 
 -- use <+> ...
-myManageHook =  manageHook defaultConfig <+>  manageScratchPad
+myManageHook =  composeAll[
+	manageHook defaultConfig
+	, manageScratchPad
+	--, className =? "Xpdf" --> doApplyKeymap
+	--, (className =? "NetBeans IDE 8.2" ) --> doUnfloat
+	, (appName =? "Java" ) --> doUnfloat
+	]
+	where doUnfloat = ask >>= doF . W.sink
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook(W.RationalRect l t w h)
@@ -101,7 +115,7 @@ manageScratchPad = scratchpadManageHook(W.RationalRect l t w h)
 
 main = xmonad $ defaultConfig
 	{ modMask = super
-	, logHook = ewmhDesktopsLogHook <+> historyHook
+	, logHook = ewmhDesktopsLogHook <+> historyHook <+> dynamicLog
 	, manageHook =  myManageHook
 	, handleEventHook = ewmhDesktopsEventHook
 	, workspaces = myWorkspaces
@@ -111,13 +125,19 @@ main = xmonad $ defaultConfig
 	 `additionalKeys`
 	[((0 , xK_Print), randomWallpaper)
 	,((super , xK_e), commands >>= runCommand)
-	,((super , xK_f), runOrRaisePrompt defaultXPConfig)
+	--,((super , xK_f), runOrRaisePrompt defaultXPConfig)
 	,((0 , xK_F13), rpOther)
 	,((0 , xK_Menu), phantomConsole)
 	,((0 , xK_F12), phantomConsole)
+	,((0 , xK_F5),   testConsoleFunctiona >> testConsoleFunctionb)
+	--,((0 , xK_F5),  raiseAndDo referenceCard  (title =? "eph") (\_ -> showHelpRefBindingsAsTheParenthesesThing))
+	--,((0 , xK_F7), referenceCard >> showHelpRefBindingsAsTheParenthesesThing)
+	--,((0 , xK_F8), showHelpRefBindingsAsTheParenthesesThing >> referenceCard)
 	,((hyper , xK_f), selectSearch lucky)
 	,((hyper , xK_g), promptSearch greenXPConfig lucky)
-	,((hyper , xK_r), addReminder)
+	,((hyper , xK_m), addReminder)
+	,((hyper , xK_v), spawn "/home/guru/bin/vimNBCurrFile.sh newterminalwindow")
+	,((hyper , xK_e), spawn "/home/guru/bin/showErrors.sh")
 	--,((0 , xK_F10), inputPromptWithCompl defaultXPConfig "Fire" (mkComplFunFromList' ["1.Tall","2.Wide"]) ?+ \l -> sendMessage $ JumpToLayout $ drop 2 l)
 	,((controlMask .|. alt, xK_k), halt)
 
@@ -175,7 +195,8 @@ netBeans = runOrRaise "/home/guru/netbeans-8.2/bin/netbeans" (className =? "NetB
 --bookReader = runOrRaise "zathura /home/guru/Downloads/book" (className =? "Zathura")
 bookReader = raiseMaybe (spawn "zathura /home/guru/Downloads/book") (className =? "Zathura")
 --speedConsole = spawn "Eterm"
-speedConsole = scratchpadSpawnActionTerminal "urxvt"
+speedConsole = scratchpadSpawnActionCustom "urxvt -e  tail -f /var/lib/tomcat8/logs/catalina.out"
+--speedConsole = scratchpadSpawnActionTerminal "urxvt -e 'tail -f /var/lib/tomcat8/logs/catalina.out'"
 batStatus = spawn "/home/guru/bin/batStatus.sh" -- battery status
 randomWallpaper = spawn "feh --randomize --recursive --bg-scale ~/wp"
 halt = spawn "sudo shutdown now"
@@ -191,6 +212,11 @@ showDateTime = spawn $ dateCommand ++ " | " ++ dzen2Filter
 
 phantomConsole = scratchpadSpawnActionTerminal "urxvt"
 
+referenceCard :: X()
+referenceCard = spawn $ "xpdf -title eph -fullscreen " ++ "/home/guru/refs/shortcuts.pdf"
+
+promptAndOpenFile :: X()
+promptAndOpenFile = spawn "/home/guru/bin/openFileInNB.sh"
 
 
 ratpoisonBindings =
@@ -202,6 +228,7 @@ ratpoisonBindings =
 	,((0, xK_period), launcher)
 	,((0, xK_f), browser)
 	,((0, xK_b), bookReader)
+	,((0, xK_o), promptAndOpenFile)
 	,((0, xK_i), netBeans)
 	,((0, xK_w), gotoMenuArgs ["-l", "25"])
 	,((0, xK_minus), rpFocusOnVoid)
@@ -229,10 +256,11 @@ ratpoisonBindings =
 	,((0, xK_space), rpNext)
 	,((shiftMask, xK_space), rpPrevious)
 	,((0, xK_a), showDateTime)
+	,((shiftMask, xK_a), spawn "gsimplecal")
 
 
 	-- resizing
-	, ((controlMask, xK_r), resizingBindingsAsTheParenthesesThing)
+	, ((controlMask, xK_r), spawn "echo resize| osd_cat " >> resizingBindingsAsTheParenthesesThing)
 
 	,((super, xK_F12),  batStatus)
 
@@ -250,6 +278,17 @@ resizingBindings=
 	((0, xK_p), welcomeMessage >> resizingBindingsAsTheParenthesesThing) --recursive thing very powerful
 	]
 
+showHelpRefBindingsAsTheParenthesesThing :: X()
+showHelpRefBindingsAsTheParenthesesThing = submap . M.fromList $ showHelpRefBindings
+
+showHelpRefBindings = 
+	[
+	((0, xK_space), spawn "xdotool getwindowfocus windowfocus --sync key space" >> showHelpRefBindingsAsTheParenthesesThing)
+	,((0, xK_BackSpace), spawn "xdotool getwindowfocus windowfocus --sync key BackSpace" >> showHelpRefBindingsAsTheParenthesesThing)
+	,((0, xK_k), kill)
+	]
+	
+
 
 
 -- ** Mulitmedia ** --
@@ -263,3 +302,16 @@ amixer  = spawn . (amixerCmd++)
 --TO DO
 -- implement cnext cprev cother ...
 --help ... echo guru |xmessage -timeout 20 -buttons "exit:0" -default exit -file -
+
+
+doNothing :: ManageHook
+doNothing = doF id
+
+doApplyKeymap :: ManageHook
+--doApplyKeymap = doF  (\_ -> liftX showHelpRefBindingsAsTheParenthesesThing)  =<< ask
+doApplyKeymap = ask >>= \_ -> liftX showHelpRefBindingsAsTheParenthesesThing >> doNothing
+
+--applyKeymap :: (Ord a, Eq s, Eq i) -> StackSet i l a s sd -> StackSet i l a s sd
+
+
+
