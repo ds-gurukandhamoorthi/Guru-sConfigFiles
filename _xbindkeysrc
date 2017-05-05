@@ -1,0 +1,10 @@
+# increase Brightness
+"xbacklight -dec 10"
+  XF86MonBrightnessDown
+
+# decrease Brightness
+"xbacklight -inc 10"
+  XF86MonBrightnessUp
+
+"xdotool key Caps_Lock"
+  shift + F13
