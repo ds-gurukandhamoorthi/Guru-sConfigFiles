@@ -3,7 +3,7 @@ All of Guru's configuration files
 
 Xmonad configuration
 
->Power wears out those whose don't have it --Giulio Andreotti
+>Power wears out those who don't have it --Giulio Andreotti
 
 | Key binding                                   | Action  (Ratpoison Inspiration , Reminiscent of Windows)                    |
 | --------------------------------------------: | :------------------------------------------------------------               |
